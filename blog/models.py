@@ -10,7 +10,7 @@ class Post(models.Model):
     content = models.TextField(max_length=1000)
     image = models.CharField(max_length=1000)
     createdDate = models.DateTimeField(auto_now_add=True)
-    updateDate = models.DateTimeField(auto_now=True)
+    updatedDate = models.DateTimeField(auto_now=True)
     POST_CATEGORY_CHOICES = [('General', 'General'), ('Technology', 'Technology'), ('Business', 'Business'), ('Entertainment', 'Entertainment'), ('Health', 'Health'), ('Science', 'Science'), ('Sports', 'Sports')]
     category = models.CharField(choices=POST_CATEGORY_CHOICES, default='General', max_length=20)
     
@@ -20,7 +20,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     comment = models.TextField(max_length=1000)
     createdDate = models.DateTimeField(auto_now_add=True)
     
@@ -29,8 +29,17 @@ class Comment(models.Model):
     
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes")
     createdDate = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return f"{self.user} {self.post}"    
+
+
+class PostView(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name="views")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    createdDate = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.user} {self.post}"
