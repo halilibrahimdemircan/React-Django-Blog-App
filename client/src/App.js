@@ -3,7 +3,7 @@ import './App.css';
 
 function App() {
   return (
-    <div>Django React Blog App</div>
+    <Router></Router>
   );
 }
 
