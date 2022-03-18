@@ -1,12 +1,12 @@
 import { Avatar, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Formik } from 'formik';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdLockOutline } from 'react-icons/md';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
-import { login } from '../redux/actions/userAction';
+import { login, clearErrors } from '../redux/actions/userAction';
 
 //! Yup --> validation olarak kullanılıyor
 //! Bu şemayı Formik içerisine validationShema olarak atıyoruz.
@@ -29,17 +29,27 @@ function Login() {
         username: '',
         password: ''
     };
-    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
+    const { loading, error, isAuthenticated } = useSelector(state => state.user);
+
+    const redirect = location.search ? location.search.split('=')[1] : '/';
+
+    useEffect(() => {
+        if (error) {
+            dispatch(clearErrors());
+        }
+        if (isAuthenticated) {
+            navigate(redirect);
+        }
+    }, [error, dispatch, isAuthenticated, navigate, redirect]);
 
     const handleSubmit = (values, { resetForm }) => {
         // console.log(values);
-        dispatch(login(values));
+        dispatch(login(values, navigate));
         resetForm();
-        navigate('/');
     };
-
     return (
         <div className='auth'>
             <Container
