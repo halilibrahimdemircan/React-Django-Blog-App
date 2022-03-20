@@ -6,10 +6,13 @@ import AppRouter from './router/AppRouter';
 
 function App() {
   const dispatch = useDispatch();
+  const token = JSON.parse(localStorage.getItem('token'));
 
   useEffect(() => {
-    dispatch(loadUser());
-  }, [dispatch]);
+    if (token) {
+      dispatch(loadUser(token));
+    }
+  }, [dispatch, token]);
 
   return (
     <div>

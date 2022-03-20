@@ -57,9 +57,8 @@ export const register = (userData, navigate) => async dispatch => {
 };
 
 //! LOAD USER
-export const loadUser = () => async dispatch => {
+export const loadUser = token => async dispatch => {
     dispatch({ type: LOAD_USER_REQUEST });
-    const token = JSON.parse(localStorage.getItem('token'));
 
     const data = await fetch(`https://hsynarslan.pythonanywhere.com/users/auth/user/`, {
         headers: {

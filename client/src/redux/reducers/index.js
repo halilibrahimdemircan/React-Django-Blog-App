@@ -3,11 +3,11 @@ import { addCommentReducer, blogDetailReducer, blogReducer, blogsReducer } from 
 import userReducer from './userReducer';
 
 const rootReducer = combineReducers({
-    user: userReducer,
-    blogs: blogsReducer,
-    blogDetail: blogDetailReducer,
-    comment: addCommentReducer,
-    blog: blogReducer
+  user: userReducer,
+  blogs: blogsReducer,
+  blogDetail: blogDetailReducer,
+  comment: addCommentReducer,
+  blog: blogReducer
 });
 
 export default rootReducer;

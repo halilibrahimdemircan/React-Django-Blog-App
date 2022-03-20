@@ -12,7 +12,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'post', 'user', 'author', 'content',
+        fields = ('id', 'post', 'user', 'author', 'comment',
                   'createdDate', 'days_since_creation')
 
     def get_days_since_creation(self, obj):
