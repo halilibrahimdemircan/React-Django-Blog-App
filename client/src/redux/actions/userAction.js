@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { errorNote, successNote } from '../../helpers/toastNotify';
 import { CLEAR_ERRORS, LOAD_USER_FAIL, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAIL, LOGOUT_SUCCESS, REGISTER_USER_FAIL, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS } from '../constants/userConstants';
 
 //! LOGIN
@@ -9,7 +10,6 @@ export const login = (values, navigate) => async dispatch => {
         const { data } = await axios.post(
             `https://hsynarslan.pythonanywhere.com/users/auth/login/`,
             values,
-
             { withCredentials: true },
             {
                 headers: {
@@ -17,12 +17,14 @@ export const login = (values, navigate) => async dispatch => {
                 }
             }
         );
-        console.log(data);
+        // console.log(data);
 
         dispatch({ type: LOGIN_SUCCESS, payload: data.user });
         localStorage.setItem('token', JSON.stringify(data.key));
+        successNote('Login Successful');
         navigate('/');
     } catch (error) {
+        errorNote(error.response.data.non_field_errors[0]);
         dispatch({ type: LOGIN_FAIL, payload: error.response.data.non_field_errors[0] });
     }
 };
@@ -42,12 +44,14 @@ export const register = (userData, navigate) => async dispatch => {
                 }
             }
         );
-        console.log(data);
+        // console.log(data);
 
         dispatch({ type: REGISTER_USER_SUCCESS, payload: data });
         localStorage.setItem('token', JSON.stringify(data.token));
+        successNote('Register Successful');
         navigate('/');
     } catch (error) {
+        errorNote(error.response.data.non_field_errors[0]);
         dispatch({ type: REGISTER_USER_FAIL, payload: error.response.data.non_field_errors[0] });
     }
 };
@@ -62,7 +66,8 @@ export const loadUser = () => async dispatch => {
             Authorization: `Token ${token}`
         }
     }).then(res => res.json());
-    console.log(data);
+    // console.log(data);
+
     if (token) {
         dispatch({ type: LOAD_USER_SUCCESS, payload: data });
     } else {
@@ -74,11 +79,13 @@ export const loadUser = () => async dispatch => {
 export const logout = () => async dispatch => {
     try {
         const { data } = await axios.post(`https://hsynarslan.pythonanywhere.com/users/auth/logout/`, { withCredentials: true });
-        console.log(data);
+        // console.log(data);
 
         dispatch({ type: LOGOUT_SUCCESS, payload: data.detail });
         localStorage.removeItem('token');
+        successNote('Logout Successful');
     } catch (error) {
+        errorNote(error.response.data.non_field_errors[0]);
         dispatch({ type: LOGOUT_FAIL, payload: error.response.data.non_field_errors[0] });
     }
 };
