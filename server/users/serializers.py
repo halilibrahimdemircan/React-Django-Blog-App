@@ -24,7 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name",
+        fields = ["id", "username", "first_name", "last_name",
                   "email", "password", "password2"]
         extra_kwargs = {
             #! response olarak bunları dönmüyoruz. write_only=True --> yukarıda da tanımlayabiliyoruz.

@@ -9,7 +9,8 @@ export const successNote = msg =>
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-    progress: undefined
+    progress: undefined,
+    theme: 'dark'
   });
 
 export const errorNote = msg =>
@@ -20,5 +21,6 @@ export const errorNote = msg =>
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-    progress: undefined
+    progress: undefined,
+    theme: 'dark'
   });

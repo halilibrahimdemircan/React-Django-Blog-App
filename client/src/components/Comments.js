@@ -13,7 +13,7 @@ const Comments = ({ comment }) => {
 
   return (
     <>
-      <ListItem alignItems='flex-start'>
+      <ListItem alignItems='flex-start' style={{ backgroundColor: '#c9c9c9', borderRadius: '20px' }}>
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: grey[900] }} aria-label='recipe'>
             {comment.author[0].toUpperCase() || 'A'}

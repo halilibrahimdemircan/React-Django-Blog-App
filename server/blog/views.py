@@ -4,7 +4,7 @@ from rest_framework.permissions import (IsAuthenticated,
 from rest_framework.response import Response
 
 from .models import Comment, Like, Post, PostView
-from .pagination import  Pagination
+from .pagination import CursorPagi, Pagination
 from .permissions import IsOwnerOrReadOnly
 from .serializers import (CommentSerializer, LikeSerializer, PostSerializer,
                           PostViewSerializer)
@@ -12,7 +12,7 @@ from .serializers import (CommentSerializer, LikeSerializer, PostSerializer,
 
 # Create your views here.
 class PostList(generics.ListCreateAPIView):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by('-createdDate')
     serializer_class = PostSerializer
     pagination_class = Pagination
     permission_classes = (IsAuthenticatedOrReadOnly,)
@@ -79,12 +79,3 @@ class PostViewList(generics.ListCreateAPIView):
     def get_queryset(self):
         post_id = self.kwargs['id']
         return PostView.objects.filter(post=post_id)
-
-
-
-
-
-
-
-
-

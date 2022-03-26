@@ -11,13 +11,9 @@ import UpdateBlog from '../pages/UpdateBlog';
 
 const AppRouter = () => {
   const { isAuthenticated } = useSelector(state => state.user);
-  // console.log(isAuthenticated);
 
-  function RequireAuth({ children, redirectTo }) {
-    if (!isAuthenticated) {
-      return <Navigate to={redirectTo} />;
-    }
-    return children;
+  function PrivateRoute({ children }) {
+    return isAuthenticated ? children : <Navigate to='/login' />;
   }
 
   return (
@@ -30,25 +26,25 @@ const AppRouter = () => {
         <Route
           path='/detail/:id'
           element={
-            <RequireAuth redirectTo='/login'>
+            <PrivateRoute>
               <PostDetails />
-            </RequireAuth>
+            </PrivateRoute>
           }
         />
         <Route
           path='/update/:id'
           element={
-            <RequireAuth redirectTo='/login'>
+            <PrivateRoute>
               <UpdateBlog />
-            </RequireAuth>
+            </PrivateRoute>
           }
         />
         <Route
           path='/new'
           element={
-            <RequireAuth redirectTo='/login'>
+            <PrivateRoute>
               <NewBlog />
-            </RequireAuth>
+            </PrivateRoute>
           }
         />
       </Routes>

@@ -26,4 +26,3 @@ class RegisterAPI(CreateAPIView):
         #!----------------------------------------
         #! token oluşturduktan sonra headers ile göndermemiz gerekiyor
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
-

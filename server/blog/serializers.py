@@ -12,14 +12,14 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'post', 'user', 'author', 'comment',
+        fields = ('id', 'post', 'user', 'author', 'content',
                   'createdDate', 'days_since_creation')
 
     def get_days_since_creation(self, obj):
         return (now() - obj.createdDate).days
 
     def get_author(self, obj):
-        return obj.user.first_name + ' ' + obj.user.last_name
+        return obj.user.username
 
     def create(self, validated_data):
         user = self.context['request'].user
@@ -59,7 +59,7 @@ class PostViewSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     days_since_creation = serializers.SerializerMethodField()
     createdDate = serializers.DateTimeField(write_only=True, required=False)
-    comments = CommentSerializer(many=True, read_only=True)
+    comments = CommentSerializer(many=True, write_only=True, required=False)
     comment_count = serializers.SerializerMethodField()
     likes = LikeSerializer(many=True, required=False)
     like_count = serializers.SerializerMethodField()
@@ -86,7 +86,7 @@ class PostSerializer(serializers.ModelSerializer):
         return obj.views.count()
 
     def get_author(self, obj):
-        return obj.user.first_name + ' ' + obj.user.last_name
+        return obj.user.username
 
     def create(self, validated_data):
         user = self.context['request'].user

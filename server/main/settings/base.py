@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-   
 
     # third party
     'rest_framework',
@@ -47,9 +45,10 @@ INSTALLED_APPS = [
     'drf_yasg',
     'dj_rest_auth',
     'corsheaders',
+
     # myapps
     'users',
-    'blog'
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -138,9 +137,7 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ]
-
 }
-
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True

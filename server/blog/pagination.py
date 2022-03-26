@@ -1,8 +1,10 @@
-from rest_framework.pagination import PageNumberPagination, CursorPagination
+from rest_framework.pagination import CursorPagination, PageNumberPagination
+
 
 class Pagination(PageNumberPagination):
     page_size = 6
-    
-class CursorPagination(CursorPagination):
+
+
+class CursorPagi(CursorPagination):
     page_size = 1
-    ordering = '-createdDate'
+    ordering = "createdDate"
